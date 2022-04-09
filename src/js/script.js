@@ -93,7 +93,7 @@
       console.log('testProduct:', testProduct);
     },
 
-    initData: function(){
+    initData: function() {
       const thisApp = this;
 
       thisApp.data = dataSource;
