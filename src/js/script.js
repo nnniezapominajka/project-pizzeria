@@ -78,7 +78,7 @@
       /* add element to menu */
       menuContainer.appendChild(thisProduct.element);
     }
-  };
+  }
 
   const app = {
     initMenu: function(){
@@ -108,3 +108,4 @@
       thisApp.initMenu();
     },
   };
+}  
