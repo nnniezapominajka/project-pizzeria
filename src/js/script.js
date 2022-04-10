@@ -58,16 +58,24 @@
 
       thisProduct.id = id;
       thisProduct.data = data;
-
       thisProduct.renderInMenu();
+      thisProduct.getElements();
+      thisProduct.initOrderForm();
+      thisProduct.initAmountWidget();
+      thisProduct.processOrder();
+      thisProduct.initAccordion();
 
-      console.log('new Product:', thisProduct);
+
+     // console.log('new Product:', thisProduct);
+
     }
-    renderInMenu(){
+    renderInMenu() {
       const thisProduct = this;
 
       /* generate HTML based on template */
       const generatedHTML = templates.menuProduct(thisProduct.data);
+
+      // console.log(generatedHTML);
 
       /* create element using utils.createElementFromHTML */
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
@@ -77,11 +85,49 @@
 
       /* add element to menu */
       menuContainer.appendChild(thisProduct.element);
+
     }
+
+
+  initAccordion () {
+    const thisProduct = this;
+    /* find the clickable trigger (the element that should react to clicking) */
+    let trigger = thisProduct.accordionTrigger;
+    // console.log(trigger);
+    /* START: add event listener to trigger */
+    trigger.addEventListener('click', function(event) {
+
+      /* prevent default action for event */
+      event.preventDefault();
+
+      /* toggle active class on thisProduct.element */
+      thisProduct.element.classList.toggle('active');
+
+      /* find all active products */
+      const activeProducts = document.querySelectorAll(select.all.menuProductActive);
+      // const activeProducts = thisProduct.element.querySelectorAll(select.all.menuProductActive);
+
+      /* START LOOP: for each active product */
+      for (let activeProduct of activeProducts) {
+
+        /* START: if the active product isn't the element of thisProduct*/
+        if (activeProduct !== thisProduct.element) {
+
+           /* remove class active for the active product */
+           activeProduct.classList.toggle('active');
+           /* END: if the active product isn't the element of thisProduct */
+        }
+        /* END LOOP: for each active product */
+      }
+      /* END: click event listener to trigger */
+    });
   }
 
-  const app = {
-    initMenu: function(){
+
+
+
+     const app = {
+     initMenu: function(){
       const thisApp = this;
 
       console.log('thisApp.data:', thisApp.data);
