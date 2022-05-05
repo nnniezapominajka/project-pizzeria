@@ -155,12 +155,14 @@ processOrder (){
 
   //for every category (param)...
   for(let paramId in thisProduct.data.params){
+
     // determine parm value, e.g paramID = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
     const param = thisProduct.data.params[paramId];
     console.log(paramId, param);
 
     //for every option in this category
     for(let optionId in param.options){
+
       //determione option value, e.g optionId = olives', option = { label: 'Olives', price: 2, default: true }
       const option = param.options[optionId];
       console.log(optionId, option);
@@ -199,5 +201,6 @@ const app = {
       thisApp.initMenu();
   },
  };
+ 
  app.init();
 } 
