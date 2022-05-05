@@ -46,7 +46,7 @@
       defaultValue: 1,
       defaultMin: 1,
       defaultMax: 9,
-    },
+    }
   };
 
   const templates = {
@@ -62,6 +62,8 @@
       thisProduct.renderInMenu();
       thisProduct.getElements();
       thisProduct.initAccordion();
+      thisProduct.initOrderForm();
+      thisProduct.processOrder();
 
       //console.log('new Product:, this Product');
     }
@@ -86,10 +88,9 @@
 
       thisProduct.accordioTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
       thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
-      thisProduct.fromInputs = thisProduct.form.querySelectorAll(select.all.fromInputs);
-      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cardButton);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-
     }
 
     initAccordion (){
@@ -119,6 +120,56 @@
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
       });
    }
+
+initOrderForm(){
+  const thisProduct = this;
+  //console.log ('initOrderForm:', thisProduct);
+
+  thisProduct.form.addEventListener('sumbit', function(event){
+    event.preventDefault();
+    thisProduct.processOrder();
+  });
+
+  for ( let input of thisProduct.formInputs){
+    input.addEventListener('change', function(){
+      thisProduct.processOrder();
+    });
+  }
+
+  thisProduct.cartButton.addEventListener('click', function(event){
+    event.preventDefault();
+    thisProduct.processOrder();
+  });
+}
+
+processOrder (){
+  const thisProduct = this;
+  //console.log ('processOrder:', thisProduct);
+
+  // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
+  const formData = utils.serializeFormToObject(thisProduct.form);
+  console.log('formData:', formData);
+
+  //set price to default price
+  let price = thisProduct.data.price;
+
+  //for every category (param)...
+  for(let paramId in thisProduct.data.params){
+    // determine parm value, e.g paramID = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
+    const param = thisProduct.data.params[paramId];
+    console.log(paramId, param);
+
+    //for every option in this category
+    for(let optionId in param.options){
+      //determione option value, e.g optionId = olives', option = { label: 'Olives', price: 2, default: true }
+      const option = param.options[optionId];
+      console.log(optionId, option);
+    }
+  }
+
+  // update calculated price in the HTML
+  thisProduct.priceElem.innerHTML = price;
+  }
 }
 
 const app = {
@@ -136,7 +187,7 @@ const app = {
     thisApp.data = dataSource;
   },
 
-    init: function(){
+    init: function() {
       const thisApp = this;
       console.log('*** App starting ***');
       console.log('thisApp:', thisApp);
@@ -149,4 +200,4 @@ const app = {
   },
  };
  app.init();
-}
+} 
