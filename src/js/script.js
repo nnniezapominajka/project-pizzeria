@@ -213,7 +213,10 @@ class AmountWidget{
   constructor(element){
     const thisWidget = this;
 
+
     thisWidget.getElements(element);
+    thisWidget.setValue(thisWidget.input.value);
+    thisWidget.initActions();
 
     console.log('AmountWidget:', thisWidget);
     console.log('constructor arguments:', element);
@@ -235,12 +238,30 @@ class AmountWidget{
 
     /* TODO: Add validiation */
 
-    if(thisWidget.value !== newValue){
+    if(thisWidget.value !== newValue && !isNaN(newValue)){
       thisWidget.value = newValue;
     }
     thisWidget.input.value = thisWidget.value;
   }
-}
+  initActions(){
+    const thisWidget = this;
+
+    thisWidget.input.addEventListener('change', function(){
+      //event.preventDefault();
+      thisWidget.setValue();
+    });
+
+    thisWidget.linkDecrease.addEventListener('click', function(event){
+      event.preventDefault();
+      thisWidget.setValue(thisWidget.value--);
+    });
+
+    thisWidget.linkIncrease.addEventListener('click', function(event){
+      event.preventDefault();
+      thisWidget.setValue(thisWidget.value++);
+    });
+  }
+}  
 
 const app = {
   initMenu: function(){
