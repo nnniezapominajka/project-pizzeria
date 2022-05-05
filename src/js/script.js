@@ -1,4 +1,5 @@
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
+
 {
   'use strict';
 
@@ -51,7 +52,22 @@
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
 
-  class Product {
+  const app = {
+    init: function(){
+      const thisApp = this;
+      console.log('*** App starting ***');
+      console.log('thisApp:', thisApp);
+      console.log('classNames:', classNames);
+      console.log('settings:', settings);
+      console.log('templates:', templates);
+    },
+  };
+
+  app.init();
+}
+
+
+  /*class Product {
     constructor(id, data){
       const thisProduct = this;
 
@@ -72,18 +88,18 @@
       const thisProduct = this;
 
       /* generate HTML based on template */
-      const generatedHTML = templates.menuProduct(thisProduct.data);
+      /*const generatedHTML = templates.menuProduct(thisProduct.data);
 
       // console.log(generatedHTML);
 
       /* create element using utils.createElementFromHTML */
-      thisProduct.element = utils.createDOMFromHTML(generatedHTML);
+      /*thisProduct.element = utils.createDOMFromHTML(generatedHTML);
 
       /* find menu container */
-      const menuContainer = document.querySelector(select.containerOf.menu);
+      /*const menuContainer = document.querySelector(select.containerOf.menu);
 
       /* add element to menu */
-      menuContainer.appendChild(thisProduct.element);
+      /*menuContainer.appendChild(thisProduct.element);
 
     }
 
@@ -103,35 +119,35 @@
     initAccordion ()  {
       const thisProduct = this;
       /* find the clickable trigger (the element that should react to clicking) */
-      let trigger = thisProduct.accordionTrigger;
+     /* let trigger = thisProduct.accordionTrigger;
       // console.log(trigger);
       /* START: add event listener to trigger */
-      trigger.addEventListener('click', function(event) {
+      /*trigger.addEventListener('click', function(event) {
 
        /* prevent default action for event */
-      event.preventDefault();
+      /*event.preventDefault();
 
       /* toggle active class on thisProduct.element */
-      thisProduct.element.classList.toggle('active');
+      /*thisProduct.element.classList.toggle('active');
 
       /* find all active products */
-      const activeProducts = document.querySelectorAll(select.all.menuProductActive);
+      /*const activeProducts = document.querySelectorAll(select.all.menuProductActive);
       // const activeProducts = thisProduct.element.querySelectorAll(select.all.menuProductActive);
 
       /* START LOOP: for each active product */
-      for (let activeProduct of activeProducts) {
+      /*for (let activeProduct of activeProducts) {
 
         /* START: if the active product isn't the element of thisProduct*/
-        if (activeProduct !== thisProduct.element) {
+        /*if (activeProduct !== thisProduct.element) {
 
            /* remove class active for the active product */
-           activeProduct.classList.toggle('active');
+          /* activeProduct.classList.toggle('active');
            /* END: if the active product isn't the element of thisProduct */
-        }
+        /*}
         /* END LOOP: for each active product */
-      }
+     /* }
       /* END: click event listener to trigger */
-    });
+   /* });
   }
 
   initOrderForm() {
@@ -161,41 +177,41 @@
     // console.log('processOrder');
 
     /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
-    const formData = utils.serializeFormToObject(thisProduct.form);
+    /*const formData = utils.serializeFormToObject(thisProduct.form);
     // console.log('formData', formData);
 
     /* set variable price to equal thisProduct.data.price */
-    thisProduct.params = {};
+    /*thisProduct.params = {};
     let price = thisProduct.data.price;
 
     /* START LOOP: for each paramId in thisProduct.data.params */
-    for (let paramId in thisProduct.data.params) {
+    /*for (let paramId in thisProduct.data.params) {
       /* save the element in thisProduct.data.params with key paramId as const param */
-      const param = thisProduct.data.params[paramId];
+      /*const param = thisProduct.data.params[paramId];
       // console.log(param);
 
       /* START LOOP: for each optionId in param.options */
-      for (let optionId in param.options) {
+      /*for (let optionId in param.options) {
         /* save the element in param.options with key optionId as const option */
-        const option = param.options[optionId];
+       /* const option = param.options[optionId];
         const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
 
         /* START IF: if option is selected and option is not default */
-        if (optionSelected && !option.default) {
+        /*if (optionSelected && !option.default) {
           /* add price of option to variable price */
-          price += option.price;
+         /* price += option.price;
 
           /* END IF: if option is selected and option is not default */
-        }
+        
 
         /* START ELSE IF: if option is not selected and option is default */
-        else if (!optionSelected && option.default) {
+        /*else if (!optionSelected && option.default) {
           /* deduct price of option from price */
 
-          price -= option.price;
+         /* price -= option.price;
 
           /* END ELSE IF: if option is not selected and option is default */
-        }
+        /*}
 
         const classImages = '.' + paramId + '-' + optionId;
         const optionImages = thisProduct.imageWrapper.querySelectorAll(classImages);
@@ -223,15 +239,15 @@
         }
 
         /* END LOOP: for each optionId in param.options */
-      }
+
       /* END LOOP: for each paramId in thisProduct.data.params */
-    }
+
     // multiply price by amount
-    thisProduct.priceSingle = price;
+    /*thisProduct.priceSingle = price;
     thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
 
     /* set the contents of thisProduct.priceElem to be the value of variable price */
-    thisProduct.priceElem.innerHTML = thisProduct.price;
+    /*thisProduct.priceElem.innerHTML = thisProduct.price;
 
     // console.log(thisProduct.params);
 
@@ -266,7 +282,7 @@ initAmountWidget() {
 
 
         /* TODO: Add validation */
-        thisWidget.dom.input.value = thisWidget.value;
+        /*thisWidget.dom.input.value = thisWidget.value;
         }
 
         initActions () {
@@ -315,4 +331,3 @@ initAmountWidget() {
 
       thisApp.initData();
       thisApp.initMenu();
-    }
