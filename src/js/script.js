@@ -261,7 +261,7 @@ class AmountWidget{
       thisWidget.setValue(thisWidget.value++);
     });
   }
-}  
+}
 
 const app = {
   initMenu: function(){
