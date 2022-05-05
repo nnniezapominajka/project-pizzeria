@@ -41,6 +41,7 @@
     },
   };
 
+  // eslint-disable-next-line no-unused-vars
   const settings = {
     amountWidget: {
       defaultValue: 1,
@@ -238,7 +239,7 @@ class AmountWidget{
 
     /* TODO: Add validiation */
 
-    if(thisWidget.value !== newValue && !isNaN(newValue)){
+    if(thisWidget.value !== newValue && !isNaN(newValue)&& value <= settings.amountWidget.defaultMax && value >= settings.amountWidget.defaultMin){
       thisWidget.value = newValue;
     }
     thisWidget.input.value = thisWidget.value;
@@ -248,17 +249,17 @@ class AmountWidget{
 
     thisWidget.input.addEventListener('change', function(){
       //event.preventDefault();
-      thisWidget.setValue();
+      thisWidget.setValue(thisWidget.input);
     });
 
     thisWidget.linkDecrease.addEventListener('click', function(event){
       event.preventDefault();
-      thisWidget.setValue(thisWidget.value--);
+      thisWidget.setValue(thisWidget.value - 1);
     });
 
     thisWidget.linkIncrease.addEventListener('click', function(event){
       event.preventDefault();
-      thisWidget.setValue(thisWidget.value++);
+      thisWidget.setValue(thisWidget.value + 1);
     });
   }
 }
