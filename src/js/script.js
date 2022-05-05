@@ -53,10 +53,8 @@
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
   class Product {
-    constructor(id, data) {
+    constructor() {
       const thisProduct = this;
-      thisProduct.id = id;
-      thisProduct.data = data;
 
       console.log('new Product:, this Product');
     }
@@ -89,6 +87,5 @@
       thisApp.initMenu();
     },
   };
-
   app.init();
 }
