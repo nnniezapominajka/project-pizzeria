@@ -60,9 +60,10 @@
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
+      thisProduct.getElements();
       thisProduct.initAccordion();
 
-      console.log('new Product:, this Product');
+      //console.log('new Product:, this Product');
     }
     renderInMenu() {
       const thisProduct = this;
@@ -80,14 +81,25 @@
       menuContainer.appendChild(thisProduct.element);
     }
 
+    getElements(){
+      const thisProduct = this;
+
+      thisProduct.accordioTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.fromInputs = thisProduct.form.querySelectorAll(select.all.fromInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cardButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+
+    }
+
     initAccordion (){
       const thisProduct = this;
 
       /* find the clickable trigger (to element thas should react to clicking) */
-      const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      //const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
       //console.log('clickableTrigger:', clickableTrigger);
       /* START: add event listener to clickable trigger on event click */
-      clickableTrigger.addEventListener('click', function(event) {
+      this.accordioTrigger.addEventListener('click', function(event) {
 
         /* prevent default action for event */
         event.preventDefault();
@@ -102,7 +114,7 @@
             active.classList.remove(classNames.menuProduct.wrapperActive);
           }
         }
-        
+
         /* toggle active class on thisProduct.element */
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
       });
