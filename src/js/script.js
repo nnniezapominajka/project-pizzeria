@@ -248,6 +248,7 @@ class AmountWidget{
     const thisWidget = this;
 
 
+
     thisWidget.getElements(element);
     thisWidget.setValue(thisWidget.dom.input.value);
     thisWidget.initActions();
@@ -259,7 +260,6 @@ class AmountWidget{
 
   getElements(element){
     const thisWidget = this;
-
 
     thisWidget.dom = {};
 
@@ -332,6 +332,9 @@ class Cart {
 
     thisCart.dom.wrapper = element;
   }
+
+
+  
 }
 
 
@@ -360,7 +363,15 @@ const app = {
 
       thisApp.initData();
       thisApp.initMenu();
+      thisApp.initCart();
+      console.log('this.initCart:', thisApp.cart);
   },
+  initCart: function() {
+    const thisApp = this;
+
+    const cartElem = document.querySelector(select,containerOf.cart);
+    thisApp.cart = new Cart (cartElem);
+  }
  };
 
  app.init();
