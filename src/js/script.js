@@ -114,13 +114,15 @@
     getElements(){
       const thisProduct = this;
 
-      thisProduct.accordioTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
-      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
-      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
-      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
+      thisProduct.dom= {};
+
+      thisProduct.dom.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.dom.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.dom.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.dom.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.dom.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.dom.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.dom.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
 
     initAccordion (){
@@ -130,7 +132,7 @@
       //const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
       //console.log('clickableTrigger:', clickableTrigger);
       /* START: add event listener to clickable trigger on event click */
-      this.accordionTrigger.addEventListener('click', function(event) {
+      thisProduct.dom.accordionTrigger.addEventListener('click', function(event) {
 
         /* prevent default action for event */
         event.preventDefault();
@@ -155,18 +157,18 @@ initOrderForm(){
   const thisProduct = this;
   //console.log ('initOrderForm:', thisProduct);
 
-  thisProduct.form.addEventListener('sumbit', function(event){
+  thisProduct.dom.form.addEventListener('sumbit', function(event){
     event.preventDefault();
     thisProduct.processOrder();
   });
 
-  for ( let input of thisProduct.formInputs){
+  for ( let input of thisProduct.dom.formInputs){
     input.addEventListener('change', function(){
       thisProduct.processOrder();
     });
   }
 
-  thisProduct.cartButton.addEventListener('click', function(event){
+  thisProduct.dom.cartButton.addEventListener('click', function(event){
     event.preventDefault();
     thisProduct.processOrder();
   });
@@ -177,7 +179,7 @@ processOrder (){
   //console.log ('processOrder:', thisProduct);
 
   // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
-  const formData = utils.serializeFormToObject(thisProduct.form);
+  const formData = utils.serializeFormToObject(thisProduct.dom.form);
   //console.log('formData:', formData);
 
   //set price to default price
@@ -213,7 +215,7 @@ processOrder (){
           price -= option.price;
 
       }
-      const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
+      const optionImage = thisProduct.dom.imageWrapper.querySelector('.' + paramId + '-' + optionId);
       //console.log('optionImage:', optionImage);
 
       if(optionImage) {
@@ -227,15 +229,15 @@ processOrder (){
   }
 
   /* muptiply price by amount */
-  price *= thisProduct.amountWidget.value;
+  price *= thisProduct.amountWidget.dom.value;
   // update calculated price in the HTML
-  thisProduct.priceElem.innerHTML = price;
+  thisProduct.dom.priceElem.innerHTML = price;
   }
   initAmmountWidget(){
     const thisProduct = this;
 
-    thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
-    thisProduct.amountWidgetElem.addEventListener('updated', function(){
+    thisProduct.amountWidget = new AmountWidget(thisProduct.dom.amountWidgetElem);
+    thisProduct.dom.amountWidgetElem.addEventListener('updated', function(){
       thisProduct.processOrder();
     });
   }
@@ -247,7 +249,7 @@ class AmountWidget{
 
 
     thisWidget.getElements(element);
-    thisWidget.setValue(thisWidget.input.value);
+    thisWidget.setValue(thisWidget.dom.input.value);
     thisWidget.initActions();
 
     //console.log('AmountWidget:', thisWidget);
@@ -258,11 +260,14 @@ class AmountWidget{
   getElements(element){
     const thisWidget = this;
 
-    thisWidget.element = element;
-    thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
-    thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
-    thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
-    thisWidget.value = settings.amountWidget.defaultValue;
+
+    thisWidget.dom = {};
+
+    thisWidget.dom.element = element;
+    thisWidget.dom.input = thisWidget.dom.element.querySelector(select.widgets.amount.input);
+    thisWidget.dom.linkDecrease = thisWidget.dom.element.querySelector(select.widgets.amount.linkDecrease);
+    thisWidget.dom.linkIncrease = thisWidget.dom.element.querySelector(select.widgets.amount.linkIncrease);
+    thisWidget.dom.value = settings.amountWidget.defaultValue;
   }
 
   setValue(value){
@@ -272,31 +277,31 @@ class AmountWidget{
 
     /* TODO: Add validiation */
 
-    if(thisWidget.value !== newValue && !isNaN(newValue)
+    if(thisWidget.dom.value !== newValue && !isNaN(newValue)
     && value <= settings.amountWidget.defaultMax
     && value >= settings.amountWidget.defaultMin){
-      thisWidget.value = newValue;
+      thisWidget.dom.value = newValue;
     }
       thisWidget.announce();
-      thisWidget.input.value = thisWidget.value;
+      thisWidget.dom.input.value = thisWidget.dom.value;
 
 
   }
   initActions(){
     const thisWidget = this;
 
-    thisWidget.input.addEventListener('change', function(){
-      thisWidget.setValue(thisWidget.input.value);
+    thisWidget.dom.input.addEventListener('change', function(){
+      thisWidget.setValue(thisWidget.dom.input.value);
     });
 
-    thisWidget.linkDecrease.addEventListener('click', function(event){
+    thisWidget.dom.linkDecrease.addEventListener('click', function(event){
       event.preventDefault();
-      thisWidget.setValue(thisWidget.value - 1);
+      thisWidget.setValue(thisWidget.dom.value - 1);
     });
 
-    thisWidget.linkIncrease.addEventListener('click', function(event){
+    thisWidget.dom.linkIncrease.addEventListener('click', function(event){
       event.preventDefault();
-      thisWidget.setValue(thisWidget.value + 1);
+      thisWidget.setValue(thisWidget.dom.value + 1);
     });
   }
 
@@ -304,10 +309,11 @@ class AmountWidget{
     const thisWidget = this;
 
     const event = new Event('updated');
-    thisWidget.element.dispatchEvent(event);
+    thisWidget.dom.element.dispatchEvent(event);
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 class Cart {
   constructor(element){
     const thisCart = this;
