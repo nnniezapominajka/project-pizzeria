@@ -1,6 +1,6 @@
 .cart {
   position: absolute;
-  width: 300px;
+  width: 300px; // CHANGED
   right: 0;
   top: $base-size;
   padding: ($base-size) ($base-size * 1.5);
@@ -73,9 +73,11 @@
 
   }
 
-  &__product {
-    width: 170px;
+  &__product {  // CODE CHANGED
+    width: 170px;  //CODE CHANGED
   }
+
+  // CODE ADDED START
 
   &__product-header {
     @include flex(row, center, space-between);
@@ -103,9 +105,11 @@
     &::after {
       position: absolute;
       content: ':';
-    }
-
   }
+
+}
+
+ // CODE ADDED END
 
   &__action-buttons {
     @include flex(row, center, space-between);
@@ -131,7 +135,7 @@
   }
 
   &__order-price {
-    margin: 0;
+    margin: 0 0 0;  // CODE CHANGED
     padding: $base-size 0;
     list-style-type: none;
     border-top: 1px solid lighten($color-dark, 70%);
@@ -139,7 +143,6 @@
     li {
       @include flex(row, center, space-between);
     }
-
   }
 
   &__order-confirmation {
@@ -148,7 +151,7 @@
 
     input, button {
       width: 100%;
-      margin-bottom: ($base-size * 0.5);
+      margin-bottom: ($base-size / 2);
     }
 
   }
