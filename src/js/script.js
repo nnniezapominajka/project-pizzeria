@@ -321,8 +321,9 @@ class Cart {
     thisCart.products = [];
 
     thisCart.getElements(element);
+    thisCart.initActions();
 
-    console.log('new Cart:', thisCart);
+    //console.log('new Cart:', thisCart);
   }
 
   getElements(element){
@@ -331,10 +332,19 @@ class Cart {
     thisCart.dom = {};
 
     thisCart.dom.wrapper = element;
+    thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+      //console.log('thisCart.dom.toggleTrigger:', thisCart.dom.toggleTrigger);
+  }
+  initActions(){
+    const thisCart = this;
+
+    thisCart.dom.toggleTrigger.addEventListener('click', function(){
+      thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
+    });
+
   }
 
 
-  
 }
 
 
@@ -364,15 +374,15 @@ const app = {
       thisApp.initData();
       thisApp.initMenu();
       thisApp.initCart();
-      console.log('this.initCart:', thisApp.cart);
+      //console.log('this.initCart:', thisApp.cart);
   },
   initCart: function() {
     const thisApp = this;
-
     const cartElem = document.querySelector(select,containerOf.cart);
     thisApp.cart = new Cart (cartElem);
-  }
- };
+  },
+};
 
  app.init();
+ 
 } 
