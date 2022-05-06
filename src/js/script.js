@@ -7,7 +7,7 @@
   const select = {
     templateOf: {
       menuProduct: '#template-menu-product',
-      cartProduct: '#template-cart-product', 
+      cartProduct: '#template-cart-product',
     },
     containerOf: {
       menu: '#product-list',
@@ -335,6 +335,6 @@ const app = {
       thisApp.initMenu();
   },
  };
-
+ 
  app.init();
 } 
