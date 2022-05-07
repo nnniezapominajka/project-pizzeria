@@ -233,7 +233,7 @@ processOrder (){
 
   /* muptiply price by amount */
   thisProduct.priceSingle = price;
-  thisProduct.priceSingle *= thisProduct.amountWidget.dom.value;
+  price *= thisProduct.amountWidget.dom.value;
   // update calculated price in the HTML
   thisProduct.dom.priceElem.innerHTML = price;
   }
@@ -249,7 +249,7 @@ processOrder (){
     const thisProduct = this;
 
     app.cart.add(thisProduct.prepareCartProduct());
-    
+
 
   }
   prepartCartProduct(){
@@ -405,7 +405,7 @@ class Cart {
 
     thisCart.dom.productList.appendChild(generatedDOM);
 
-    
+
 
     console.log('adding product:', menuProduct);
   }
