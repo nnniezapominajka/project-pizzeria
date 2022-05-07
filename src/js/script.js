@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-redeclare
-/* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
+/* global Handlebars, utils, dataSource */
 
 {
   'use strict';
@@ -232,7 +232,7 @@ processOrder (){
 
   /* muptiply price by amount */
   thisProduct.priceSingle = price;
-  price *= thisProduct.amountWidget.dom.value;
+  thisProduct.priceSingle *= thisProduct.amountWidget.dom.value;
   // update calculated price in the HTML
   thisProduct.dom.priceElem.innerHTML = price;
   }
@@ -251,36 +251,35 @@ processOrder (){
 
   }
   prepartCartProduct(){
-    // eslint-disable-next-line no-unused-var
+
     const thisProduct = this;
 
-    //eslint-disable-next-line no-unused-var
     const productSummary = {};
     productSummary.id = thisProduct.id;
-      productSummary.name = thisProduct.data.name;
-      productSummary.amount = thisProduct.amountWidget.dom.value;
-      productSummary.priceSingle = thisProduct.priceSingle;
-      productSummary.price = thisProduct.priceSingle * thisProduct.amountWidget.dom.value;
+    productSummary.name = thisProduct.data.name;
+    productSummary.amount = thisProduct.amountWidget.dom.value;
+    productSummary.priceSingle = thisProduct.priceSingle;
+    productSummary.price = thisProduct.priceSingle * thisProduct.amountWidget.dom.value;
+
       productSummary.params = thisProduct.prepareCartProductsParams();
 
 
       return productSummary;
+
   }
   prepareCartProductsParams(){
     const thisProduct = this;
 
-    const formData = utils.serializeFormToObject(thisProduct.form);
+    const formData = utils.serializeFormToObject(thisProduct.dom.form);
     const params = {};
     for(let paramId in thisProduct.data.params){
       // determine parm value, e.g paramID = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
       const param = thisProduct.data.params[paramId];
       //console.log(paramId, param);
       //create category param in params const
-      //eslint-disable-next-line no-undef
       params[paramID] = {
         label: param.label,
         options: {}
-
       };
       for(let optionId in param.options) {
         const option = param.options[optionId];
@@ -367,7 +366,6 @@ class AmountWidget{
   }
 }
 
-// eslint-disable-next-line no-unused-vars
 class Cart {
   constructor(element){
     const thisCart = this;
