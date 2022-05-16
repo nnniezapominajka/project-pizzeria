@@ -357,6 +357,9 @@
       thisCart.dom.subtotalPrice = element.querySelector(select.cart.subtotalPrice);
       thisCart.dom.totalPrice = element.querySelectorAll(select.cart.totalPrice);
       thisCart.dom.totalNumber = element.querySelector(select.cart.totalNumber);
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+      thisCart.dom.adress = thisCart.dom.wrapper.querySelector(select.cart.adress);
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
     }
 
     initActions() {
@@ -370,6 +373,10 @@
       });
       thisCart.dom.productList.addEventListener('remove', function (event) {
         thisCart.remove(event.detail.cartProduct);
+      });
+      thisCart.dom.form.addEventListener('submit', function(event){
+        event.preventDefault();
+        thisCart.sendOrder();
       });
     }
 
@@ -423,7 +430,8 @@
         // eslint-disable-next-line no-cond-assign
         if (cartProduct.id = product.id) {
           const index = thisCart.products.indexOf(product);
-          const removeProduct = thisCart.products.splice(index, 1);
+          // eslint-disable-next-line no-unused-vars
+          const indexOfProductToRemove = thisCart.products.splice(index, 1);
         }
       }
 
@@ -431,6 +439,43 @@
       removeDom.remove();
       thisCart.update();
 
+    }
+    sendOrder(){
+      const thisCart = this;
+
+      const url = settings.db.url + '/' + settings.db.orders;
+
+      const payload = {
+        adress: thisCart.dom.adress,
+        phone: thisCart.dom.phone,
+        totalPrice: thisCart.totalPrice,
+        subtotalPrice: thisCart.subtotalPrice,
+        totalNumber: thisCart.totalNumber,
+        deliveryFee: thisCart.deliveryFee,
+        products: [],
+      };
+
+      for (let prod of thisCart.products) {
+        payload.products.push(prod.getData());
+      }
+      console.log('url',url);
+      console.log('payload', payload);
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+
+      fetch(url, options)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (parsedResponse) {
+          console.log('parsedResponse', parsedResponse);
+        });
     }
   }
 
@@ -489,6 +534,19 @@
         event.preventDefault();
         thisCartProduct.remove();
       });
+    }
+    getData(){
+      const thisCartProduct = this;
+
+      thisCartProduct.simpleData = {
+        id : thisCartProduct.id,
+        name: thisCartProduct.name,
+        amount: thisCartProduct.amount,
+        price: thisCartProduct.price,
+        priceSingle: thisCartProduct.priceSingle,
+        params: thisCartProduct.params,
+      };
+      return thisCartProduct.simpleData;
     }
   }
 
