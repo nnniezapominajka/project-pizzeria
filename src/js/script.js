@@ -104,12 +104,9 @@
       thisProduct.initAmountWidget(thisProduct.amountWidgetElem.addEventListener('updated', function(){
         thisProduct.processOrder();
       }));
-      thisProduct.processOrder();
-
     }
     renderInMenu() {
       const thisProduct = this;
-
       /* generate HTML based on template*/
       const generatedHTML = templates.menuProduct(thisProduct.data);
 

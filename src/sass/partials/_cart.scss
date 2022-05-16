@@ -105,11 +105,10 @@
     &::after {
       position: absolute;
       content: ':';
+    }
   }
 
-}
-
- // CODE ADDED END
+  // CODE ADDED END
 
   &__action-buttons {
     @include flex(row, center, space-between);
