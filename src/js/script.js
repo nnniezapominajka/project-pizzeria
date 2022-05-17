@@ -28,7 +28,7 @@
     },
     widgets: {
       amount: {
-        input: 'input.amount',
+        input: 'input.amount', //CODE CHANGED
         linkDecrease: 'a[href="#less"]',
         linkIncrease: 'a[href="#more"]',
       },
