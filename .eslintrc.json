@@ -31,7 +31,9 @@
     },
     "globals": {
       "Handlebars": false
+
     }
+
 }
 
 
