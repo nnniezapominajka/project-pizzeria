@@ -37,18 +37,8 @@ export const select = {
       wrapper: '.hour-picker',
       input: 'input[type="range"]',
       output: '.output',
-    },
+    }
   },
-  booking: {
-    peopleAmount: '.people-amount',
-    hoursAmount: '.hours-amount',
-    tables: '.floor-plan .table',
-  },
-
-  nav: {
-    links: '.main-nav a',
-  },
-
   cart: {
     productList: '.cart__order-summary',
     toggleTrigger: '.cart__summary',
@@ -67,18 +57,24 @@ export const select = {
     edit: '[href="#edit"]',
     remove: '[href="#remove"]',
   },
-  // CODE ADDED END
+  booking: {
+    peopleAmount: '.people-amount',
+    hoursAmount: '.hours-amount',
+    tables: '.floor-plan .table',
+  },
+  nav: {
+    links: '.main-nav a',
+  },
 };
+
 export const classNames = {
   menuProduct: {
     wrapperActive: 'active',
     imageVisible: 'active',
   },
-
   cart: {
     wrapperActive: 'active',
   },
-
   booking: {
     loading: 'loading',
     tableBooked: 'booked',
@@ -89,17 +85,29 @@ export const classNames = {
   pages: {
     active: 'active',
   }
-
 };
+
 
 export const settings = {
   amountWidget: {
     defaultValue: 1,
-    defaultMin: 0,
-    defaultMax: 10,
+    defaultMin: 1,
+    defaultMax: 9,
   },
   cart: {
     defaultDeliveryFee: 20,
+  },
+  db: {
+    url: '//localhost:3131',
+    products: 'products',
+    orders: 'orders',
+    order: 'order',
+    booking: 'booking',
+    event: 'event',
+    dateStartParamKey: 'date_gte',
+    dateEndParamKey: 'date_lte',
+    notRepeatParam: 'repeat=false',
+    repeatParam: 'repeat_ne=false',
   },
   hours: {
     open: 12,
@@ -111,23 +119,10 @@ export const settings = {
   booking: {
     tableIdAttribute: 'data-table',
   },
-  db: {
-    url: '//localhost:3131',
-    products: 'products',
-    orders: 'orders',
-    booking: 'booking',
-    event: 'event',
-    dateStartParamKey: 'date_gte',
-    dateEndParamKey: 'date_lte',
-    notRepeatParam: 'repeat=false',
-    repeatParam: 'repeat_ne=false',
-  },
 };
 
 export const templates = {
   menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
-
   cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
-
   bookingWidget: Handlebars.compile(document.querySelector(select.templateOf.bookingWidget).innerHTML),
 };

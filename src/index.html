@@ -67,6 +67,7 @@
     </section>
   </div>
 
+
     <script id="template-cart-product" type="text/x-handlebars-template">
       <li>
         <div class="widget-amount"> <!-- widget-amount -->
@@ -96,6 +97,7 @@
     </script>
     <script id="template-menu-product" type="text/x-handlebars-template">
        <article class="product"><!-- product -->
+
         <header class="product__header">
           <h3 class="product__name no-spacing">{{ name }} <i class="fas fa-chevron-down product__icon"></i></h3>
           <p class="product__base-price no-spacing">${{ price }}</p>
@@ -168,8 +170,12 @@
           {{/each}}
         </div>
       </div>
+
     </article> <!-- .product -->
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
+    <script src="js/app.js" type="module"></script>
     <script id="template-booking-widget" type="text/x-handlebars-template">
       <div class="booking-widget">
         <h2 class="page__title no-spacing">Book a table</h2>
@@ -235,8 +241,5 @@
         </form>
       </div>
     </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
-  <script src="js/app.js" type="module"></script>
 </body>
 </html>
