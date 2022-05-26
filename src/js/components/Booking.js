@@ -4,7 +4,7 @@ import AmountWidget from './AmountWidget.js';
 class Booking {
   constructor(element){
     const thisBooking = this;
-    
+
     thisBooking.render(element);
     thisBooking.initWidgets();
   }
@@ -32,7 +32,7 @@ class Booking {
 
     });
     thisBooking.dom.hoursAmount.addEventListener('updated', function() {
-      
+
     });
 
   }

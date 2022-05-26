@@ -35,8 +35,8 @@ class AmountWidget{
 
     /* TODO: Add validiation */
 
-    if(thisWidget.dom.value !== newValue && !isNaN(newValue) 
-    && value <= settings.amountWidget.defaultMax 
+    if(thisWidget.dom.value !== newValue && !isNaN(newValue)
+    && value <= settings.amountWidget.defaultMax
     && value >= settings.amountWidget.defaultMin){
       thisWidget.dom.value = newValue;
     }
