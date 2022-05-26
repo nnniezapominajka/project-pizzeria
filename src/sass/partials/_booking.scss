@@ -32,7 +32,7 @@
   > .widget-amount {
     margin: ($base-size * 2) 0 0 0;
   }
-  
+
 }
 
 .page__title {
@@ -79,22 +79,20 @@
       top: -6px;
       background: $color-dark;
     }
-  
-
 
     &__fill {
       background: #00B74A;
       transition-timing-function: cubic-bezier(0, 1, 0, 1);
       transition: width 100ms;
       box-shadow: none;
+    }
   }
-}
 
   .flatpickr-day {
     &.disabled {
       color: lighten($color-dark, 60%);
+    }
   }
-}
 
   .floor-plan {
     position: relative;
