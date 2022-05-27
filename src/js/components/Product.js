@@ -197,7 +197,7 @@ class Product{
   }
   prepareCartProductsParams(){
     const thisProduct = this;
-    
+
     const formData = utils.serializeFormToObject(thisProduct.dom.form);
     const params = {};
     for(let paramId in thisProduct.data.params){

@@ -45,7 +45,7 @@ class CartProduct {
       thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
     });
   }
-  
+
   remove() {
     const thisCartProduct = this;
 
@@ -55,7 +55,7 @@ class CartProduct {
         cartProduct: thisCartProduct,
       },
     });
-    
+
     thisCartProduct.dom.wrapper.dispatchEvent(event);
   }
 
@@ -81,6 +81,7 @@ class CartProduct {
       params: thisCartProduct.params,
     };
     return thisCartProduct.simpleData;
+    
   }
 }
 export default CartProduct;

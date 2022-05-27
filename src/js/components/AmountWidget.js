@@ -14,7 +14,7 @@ class AmountWidget extends BaseWidget{
     //thisWidget.setValue(thisWidget.dom.input.value);
     thisWidget.initActions();
 
-    console.log('AmountWidget:', thisWidget);
+    //console.log('AmountWidget:', thisWidget);
     //console.log('constructor arguments:', element);
 
   }
@@ -24,7 +24,7 @@ class AmountWidget extends BaseWidget{
     thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.amount.input);
     thisWidget.dom.linkDecrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkDecrease);
     thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);
-    thisWidget.value = settings.amountWidget.defaultValue;
+    //thisWidget.value = settings.amountWidget.defaultValue;
   }
 
 
