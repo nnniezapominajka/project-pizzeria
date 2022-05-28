@@ -41,9 +41,9 @@ class Booking {
     const urls = {
       bookings:      settings.db.url + '/' + settings.db.booking
                                      + '?' + params.bookings.join('&'),
-      eventsCurrent: settings.db.url + '/' + settings.db.event   
+      eventsCurrent: settings.db.url + '/' + settings.db.event
                                      + '?' + params.eventsCurrent.join('&'),
-      eventsRepeat:  settings.db.url + '/' + settings.db.event   
+      eventsRepeat:  settings.db.url + '/' + settings.db.event
                                      + '?' + params.eventsRepeat.join('&'),
     };
 
@@ -63,9 +63,9 @@ class Booking {
         ]);
       })
       .then(function([bookings, eventsCurrent, eventsRepeat]){
-        console.log(bookings);
-        console.log(eventsCurrent);
-        console.log(eventsRepeat);
+        console.log('bookings', bookings);
+        console.log('eventsCurrent', eventsCurrent);
+        console.log('eventsRepeat', eventsRepeat);
       });
   }
 
