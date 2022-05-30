@@ -4,12 +4,11 @@ import DatePicker from './DatePicker.js';
 import HourPicker from './HourPicker.js';
 import { utils } from './utils.js';
 
-
 class Booking {
   constructor(element){
     const thisBooking = this;
 
-    thisBooking.selectTable =0;
+    thisBooking.selectTable;
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
@@ -36,8 +35,6 @@ class Booking {
         endDateParam,
       ],
     };
-
-    //console.log('getData params:', params);
 
     const urls = {
       bookings:      settings.db.url + '/' + settings.db.booking
@@ -136,6 +133,10 @@ class Booking {
 
     for (let table of thisBooking.dom.tables) {
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
+      //remove tableSelected if data changed
+      if (table.classList.contains (classNames.booking.tableSelected)) {
+        table.classList.remove(classNames.booking.tableSelected);
+      }
       if (!isNaN(tableId)) {
         tableId = parseInt(tableId);
       }
@@ -165,11 +166,14 @@ class Booking {
       thisBooking.selectedTable = null;
     }
 
+    //unlick table if pick other
     for(let table of thisBooking.dom.tables){
       if(table !== clickedElement){
         table.classList.remove(classNames.booking.tableSelected);
       }
     }
+
+    //table booked
     if(clickedElement.classList.contains(classNames.booking.tableBooked)){
       alert('Sorry. Ten stół jest zajęty');
     }
@@ -179,8 +183,50 @@ class Booking {
         table.classList.remove(classNames.booking.tableSelected);
       }
     }
+    //TODO
+    //Wysyłka danych na serwer
 
   }
+
+  sendBooking(){
+    event.preventDefault();
+    const thisBooking = this;
+
+    const url = settings.db.url + '/' + settings.db.booking;
+    console.log(url);
+    const payload = {
+      date: thisBooking.datePicker.value,
+      hour: thisBooking.hourPicker.value,
+      table: parseInt(thisBooking.selectedTable),
+      duration: parseInt(thisBooking.hoursAmount.value),
+      ppl: parseInt(thisBooking.peopleAmount.value),
+      starters: [],
+      phone: thisBooking.dom.phone.value,
+      adress: thisBooking.dom.adress.value,
+    };
+    for (let starter of thisBooking.dom.starters){
+      if (starter.checked == true){
+        payload.starters.push(starter.value);
+      }
+    }
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(url, options)
+      .then(function (response) {
+        return response.json();
+      }).then(function(){
+        thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+        thisBooking.updateDOM();
+      });
+  }
+
 
   render(element){
     const thisBooking = this;
@@ -198,6 +244,10 @@ class Booking {
 
     thisBooking.dom.tables = element.querySelectorAll(select.booking.tables);
     thisBooking.dom.floorPlan = element.querySelector(select.booking.floorPlan);
+    thisBooking.dom.orderConfirmation = element.querySelector(select.booking.bookButton);
+    thisBooking.dom.phone = element.querySelector(select.booking.phoneNumber);
+    thisBooking.dom.adress = element.querySelector(select.booking.address);
+    thisBooking.dom.starters = element.querySelectorAll(select.booking.starters);
 
   }
 
@@ -205,18 +255,23 @@ class Booking {
     const thisBooking = this;
     thisBooking.amountWidget = new AmountWidget(thisBooking.dom.peopleAmount);
     thisBooking.amountWidget = new AmountWidget(thisBooking.dom.hoursAmount);
-
-    thisBooking.dom.peopleAmount.addEventListener('updated', function() {});
-    thisBooking.dom.hoursAmount.addEventListener('updated', function() {});
-
+    //thisBooking.dom.peopleAmount.addEventListener('updated', function() {});
+    //thisBooking.dom.hoursAmount.addEventListener('updated', function() {});
     thisBooking.datePicker = new DatePicker (thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker (thisBooking.dom.hourPicker);
+
+
     thisBooking.dom.floorPlan.addEventListener('click', function(event){
       thisBooking.initTables(event);
     });
 
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
+    });
+
+    thisBooking.dom.orderConfirmation.addEventListener('click', function(){
+      event.preventDefault();
+      thisBooking.sendBooking();
     });
 
   }
