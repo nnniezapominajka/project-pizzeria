@@ -9,6 +9,7 @@ class Booking {
   constructor(element){
     const thisBooking = this;
 
+    thisBooking.selectTable =0;
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
@@ -149,6 +150,37 @@ class Booking {
       }
     }
   }
+  initTables(event){
+    const thisBooking = this;
+    const clickedElement = event.target;
+
+    if (clickedElement.classList.contains(classNames.booking.table) &&
+       !clickedElement.classList.contains(classNames.booking.tableBooked)) {
+      clickedElement.classList.toggle(classNames.booking.tableSelected);
+      const tableId = event.target.getAttribute(settings.booking.tableIdAttribute);
+      thisBooking.selectedTable = tableId;
+    }
+
+    if (!clickedElement.classList.contains(classNames.booking.tableSelected)){
+      thisBooking.selectedTable = null;
+    }
+
+    for(let table of thisBooking.dom.tables){
+      if(table !== clickedElement){
+        table.classList.remove(classNames.booking.tableSelected);
+      }
+    }
+    if(clickedElement.classList.contains(classNames.booking.tableBooked)){
+      alert('Sorry. Ten stół jest zajęty');
+    }
+
+    for (let table of thisBooking.dom.tables){
+      if(!table.classList.contains(classNames.booking.tableSelected)){
+        table.classList.remove(classNames.booking.tableSelected);
+      }
+    }
+
+  }
 
   render(element){
     const thisBooking = this;
@@ -165,6 +197,7 @@ class Booking {
     thisBooking.dom.hourPicker = element.querySelector(select.widgets.hourPicker.wrapper);
 
     thisBooking.dom.tables = element.querySelectorAll(select.booking.tables);
+    thisBooking.dom.floorPlan = element.querySelector(select.booking.floorPlan);
 
   }
 
@@ -173,15 +206,14 @@ class Booking {
     thisBooking.amountWidget = new AmountWidget(thisBooking.dom.peopleAmount);
     thisBooking.amountWidget = new AmountWidget(thisBooking.dom.hoursAmount);
 
-    thisBooking.dom.peopleAmount.addEventListener('updated', function() {
-
-    });
-    thisBooking.dom.hoursAmount.addEventListener('updated', function() {
-
-    });
+    thisBooking.dom.peopleAmount.addEventListener('updated', function() {});
+    thisBooking.dom.hoursAmount.addEventListener('updated', function() {});
 
     thisBooking.datePicker = new DatePicker (thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker (thisBooking.dom.hourPicker);
+    thisBooking.dom.floorPlan.addEventListener('click', function(event){
+      thisBooking.initTables(event);
+    });
 
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
