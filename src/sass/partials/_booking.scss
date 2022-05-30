@@ -80,6 +80,8 @@
       background: $color-dark;
     }
 
+    
+
     &__fill {
       background: #00B74A;
       transition-timing-function: cubic-bezier(0, 1, 0, 1);
@@ -154,6 +156,7 @@
         }
 
       }
+
       &.selected {
         cursor: not-allowed;
         background-color: lighten(#2ecc71, 40%);
@@ -177,6 +180,7 @@
         }
       }
     }
+
 
     [data-table="1"] {
       left: 40px;
