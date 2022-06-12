@@ -37,7 +37,7 @@ class Product{
 
   getElements(){
     const thisProduct = this;
-    
+
     thisProduct.dom = {};
 
     thisProduct.dom.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
@@ -125,7 +125,7 @@ class Product{
         //determione option value, e.g optionId = olives', option = { label: 'Olives', price: 2, default: true }
         const option = param.options[optionId];
         //console.log(optionId, option);
-        
+
         //chech if there is parm with a name of paramId in formData and if it includes optionIId
         const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
         //if(formData[paramId] && formData[paramId].includes(optionId)) {
@@ -171,7 +171,7 @@ class Product{
   }
   addToCart(){
     const thisProduct = this;
-    
+
     //app.cart.add(thisProduct.prepareCartProduct());
     const event = new CustomEvent('add-to-cart', {
       bubbles: true,

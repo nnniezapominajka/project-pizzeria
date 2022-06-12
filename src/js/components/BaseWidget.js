@@ -1,4 +1,3 @@
-
 class BaseWidget {
   constructor (wrapperElement, initialValue){
     const thisWidget = this;
@@ -14,7 +13,7 @@ class BaseWidget {
 
     return thisWidget.correctValue;
   }
-
+  
   set value(value){
     const thisWidget = this;
 
